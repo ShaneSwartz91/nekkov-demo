@@ -1,0 +1,11 @@
+{
+auto_https off
+}
+:{$PORT:8080}{
+encode gzip zstd
+@api path /api* /api/* /health /api/health
+handle @api {reverse_proxy 127.0.0.1:8000}
+handle {root * /srv/app/frontend/dist
+try_files {path} /index.html
+file_server}
+}
